@@ -1,0 +1,66 @@
+*****************************************************
+*
+*   Framework voor CRUD applicaties
+*
+*   VISTA College Erik Steens / Jeroen Wilmes
+*
+*   juni 2020
+*
+*****************************************************
+
+Framework voor het bouwen van CRUD applicaties. De applicatie mag worden gebruikt voor het maken van opdrachten voor
+de opleiding waarbij de onderliggende techniek toepasbaar is. Het is aan de student om zich op basis van de code en
+(deze) documentatie de structuur eigen te maken
+
+Door de modulaire opzet is uitbreiding eenvoudig te realiseren.
+
+Dit Framework is afkomstig van de VISTA Buurtzorg applicatie en omgebouwd naar generieke code
+
+Ingebouwde features
+-   Menu
+-   Login met gebruikersprofielen inclusief een rollenmogelijkheid
+-   Keuze webpagina's voor of achter de login te plaatsen
+
+De applicatie maakt gebruik van een database met daarin een tabel voor gebruikers en uit te breiden met 
+andere functionele tabellen. De database heet framework, de gebruikersnaam en wachtwoord ook. De database
+kan worden uitgebreid met meerdere tabellen.
+
+De applicatie is gebaseerd op objecten (OOP) waarbij gefaseerd de HTML van een pagina wordt opgebouwd en pas aan het einde
+wordt weergegeven.
+
+Om een pagina toe te voegen moeten de volgende stappen worden doorlopen:
+	- add page to config.inc.php 
+	- add menu to mainmenu.inc.php
+	- add page to secure.inc.php (indicate front-end or back-end = after login)
+	- add page with the content including a class for the page.
+
+Structuur
+/           
+    index.php           startprogramma
+    .htaccess           zorgt ervoor dat alles langs index.php wordt afgehandeld
+
+/css        Opmaak
+/images     Grafische documenten (oa icons, jpg's)
+/includes   
+    config.inc.php      Mapinstellingen (constantes)
+    content.inc.php     class Content   Aangeroepen door pagebuilder, opent de juiste pagina klasse uit pages
+    database.inc.php    class Database  Methodes om data uit de database aan te spreken
+    footer.inc.php      class Footer    Maakt de onderkant van elke pagina (standaard)
+    head.inc.php        class Header    Maakt de bovenkant van elke pagina (standaard)
+    login.inc.php       class Login     Maakt en verwerkt login formulier en zet gebruikersinfo in $_SESSION
+    mainmenu.inc.php    class Mainmenu  Maakt menu voor pagina's voor en achter de login
+    pagebuilder.inc.php class Pagebuilder   Bouwt pagina op uit oa de onderdelen head, mainmenu en footer
+    secure.inc.php      class secure    Bepaalt welke pagina voor of achter de login zit
+/interfaces 
+    ipage.inc.php       interface ipage Met methode getHtml die in elke page klasse is geïmplementeerd
+/js
+
+/pages
+    admin.inc.php       class AdminPage extends Core implements iPage: bedoeld voor administratiedoeleinden
+    core.inc.php        class Core met standaardfuncties voor oa UUID en Hash
+    gebruikers.inc.php  class GebruikersPage extends Core implements iPage: CRUD gebruikersonderhoud
+    home.inc.php        class HomePage extends Core implements iPage: Hoofdpagina inhoud
+    logout.inc.php      class LogoutPage extends Core implements iPage: Logout, reset sessie en herstart de standaardfuncties
+    pagina1.inc.php     class Pagina1Page extends Core implements iPage: Een pagina zonder login
+    pagina2.inc.php     class Pagina2Page extends Core implements iPage: Een pagina achter de login
+  
